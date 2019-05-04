@@ -18,13 +18,7 @@ def handle_start(message):
 def handle_reg(message):
     bot.send_message(message.chat.id, "Напиши навзвания двух команд игравших в матче в формате ' Название команды хозяев "
                                       "- Название Команды гостей' " )
-    bot.register_next_step_handler(message, get_name)  # следующий шаг – функция get_name
-
-
-# Handles all text messages that match the regular expression
-@bot.message_handler(content_types=['text'], regexp="python")
-def handle_python_message(message):
-    bot.send_message(message.chat.id, "Я обожаю python!")
+    bot.register_next_step_handler(message, get_name)  
 
 
 @bot.message_handler(content_types=['text'])
@@ -51,7 +45,7 @@ def get_date(message):
     if len(list)!=0:
         name,score,goals=list[0]
         answer = 'Матч {Name} закончился со счетом {Score} голы забили {Goals}, Вам понравилась моя работа?'.format(Name=name, Score=score, Goals=goals)
-        keyboard = telebot.types.InlineKeyboardMarkup()  # наша клавиатура
+        keyboard = telebot.types.InlineKeyboardMarkup()  
         key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='yes')
         keyboard.add(key_yes)
         key_no = telebot.types.InlineKeyboardButton(text='Нет', callback_data='no')
@@ -61,7 +55,7 @@ def get_date(message):
         bot.send_message(message.chat.id, text=answer, reply_markup=keyboard)
     else:
         answer="Данных по этому матчу найти не удалось :( , Не хотели бы вы нам помочь?"
-        keyboard = telebot.types.InlineKeyboardMarkup()  # наша клавиатура
+        keyboard = telebot.types.InlineKeyboardMarkup()  
         key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='Yes')
         keyboard.add(key_yes)
         key_no = telebot.types.InlineKeyboardButton(text='Нет', callback_data='No')
@@ -73,7 +67,7 @@ def get_date(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
-    if call.data == "yes":  # call.data это callback_data, которую мы указали при объявлении кнопки
+    if call.data == "yes":  
         bot.send_message(call.message.chat.id, 'Спасибо! : )')
     elif call.data == "no":
         bot.send_message(call.message.chat.id, "Попрбуйте еще раз или найдите себе другого бота!:(")
